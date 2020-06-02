@@ -1,7 +1,9 @@
 #include <Adafruit_NeoPixel.h>
 #include <avr/pgmspace.h>
 
-const PROGMEM uint8_t MAP_blockM[] = {0,1,2,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,30,31,32,38,39,40,47,48,49,55,56,57,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,85,86,87};
+const PROGMEM uint8_t MAP_blockS[] = {2,3,5,6,7,8,12,13,14,15,16,18,19,20,22,23,24,25,27,30,31,32,33,34,35,38,41,42,43,44,45,46,49,52,53,54,55,56,57,58,60,63,64,65,67,68,69,70,71,73,74,75,79,80,82,83,84,85};
+const PROGMEM uint8_t MAP_blockGO[] = {1,2,3,7,8,9,11,15,17,21,22,28,32,33,37,43,44,47,48,50,54,55,59,61,65,66,70,72,76,78,79,80,84,85,86};
+const PROGMEM uint8_t MAP_blockMSU[] = {0,2,4,5,6,8,10,11,13,15,17,19,20,21,22,24,26,30,32,33,35,37,38,39,41,43,44,46,50,52,54,55,57,59,63,65,66,68,70,72,74,76,77,79,81,82,83,85,87};
 
 
 #define PIN 0
@@ -48,50 +50,61 @@ void setup() {
 
 void loop() {
   if(state){
-    // Disp M
+    // Disp S, constant for less disctraction
     for(int i=0;i<strip.numPixels();i++){
-      if(binaryExists(i,MAP_blockM,52))
-        strip.setPixelColor(i,255, 203, 5);
+      if(binaryExists(i,MAP_blockS,52))
+        strip.setPixelColor(i,26,69,60);
       else
-        strip.setPixelColor(i,0, 39, 50);
+        strip.setPixelColor(i,200,200,200);
       strip.show();
       delay(2);
     }
   }else{
-    colorWipe(strip.Color(255, 203, 5), 10,0); // Wipe Maize
+    colorWipe(strip.Color(26,69,60), 10,0);
     
-    // Disp M
+    // Disp S
     for(int i=0;i<strip.numPixels();i++){
-      if(binaryExists(i,MAP_blockM,52))
-        strip.setPixelColor(i,255, 203, 5);
+      if(binaryExists(i,MAP_blockS,52))
+        strip.setPixelColor(i,26,69,60);
       else
-        strip.setPixelColor(i,0, 39, 50);
+        strip.setPixelColor(i,200,200,200);
       strip.show();
       delay(2);
     }
     delay(3000);
     
-    colorWipe(strip.Color(0, 39, 50), 10,1); // Wipe Blue
+    colorWipe(strip.Color(26,69,60), 10,1);
     
-    // Disp M
+    // Disp GO 
     for(int i=0;i<strip.numPixels();i++){
-      if(binaryExists(i,MAP_blockM,52))
-        strip.setPixelColor(i,255, 203, 5);
+      if(binaryExists(i,MAP_blockGO,52))
+        strip.setPixelColor(i,26,69,60);
       else
-        strip.setPixelColor(i,0, 39, 50);
+        strip.setPixelColor(i,200,200,200);
+      strip.show();
+      delay(2);
+    }
+    delay(3000);
+    
+    // Disp MSU
+    for(int i=0;i<strip.numPixels();i++){
+      if(binaryExists(i,MAP_blockMSU,52))
+        strip.setPixelColor(i,26,69,60);
+      else
+        strip.setPixelColor(i,200,200,200);
       strip.show();
       delay(2);
     }
     delay(3000);
   
     for(int i=0;i<2;i++){
-      // Chase M
-      theaterChase(strip.Color(255, 203, 5),strip.Color(0,  39,  50), 25); // Maize
+      // Chase MSU
+      theaterChase(strip.Color(26,69,60),strip.Color(200,200,200), 25);
       
       // Wipe Maize/Blue 2x
       for(int i=0;i<2;i++){
-        colorWipe(strip.Color(255, 203, 5), 10,0); // Maize
-        colorWipe(strip.Color(0, 39, 50), 10,1); // Blue
+        colorWipe(strip.Color(26,69,60), 10,0);
+        colorWipe(strip.Color(200,200,200), 10,1);
       }
     }
   }
